@@ -84,9 +84,11 @@ const MyEditor: React.FC<MyEditorProps> = () => {
   };
 
   useEffect(() => {
-    const accessToken = sessionStorage.getItem('accessToken');
-    if (!accessToken) {
-      router.push('/login');
+    if (typeof window !== "undefined") {
+      const accessToken = sessionStorage.getItem('accessToken');
+      if (!accessToken) {
+        router.push('/login');
+      }
     }
   }, [router]);
 
