@@ -29,16 +29,22 @@ const MyEditor: React.FC<MyEditorProps> = () => {
   const initialEditorState = useInitialContent('/defaultContent.txt');
   const [editorState, setEditorState] = React.useState<EditorState>(() => EditorState.createEmpty());
   const [noteTitle, setNoteTitle] = useState(() => {
-    return sessionStorage.getItem('guestTitle') || 'テキスト選択で韻を探そう!';
-  });
-  useEffect(() => {
-    const content = sessionStorage.getItem('guestContent');
-    if (content) {
-      setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(content))));
-    } else {
-      setEditorState(initialEditorState);
+    if (typeof window !== "undefined") {
+      return sessionStorage.getItem('guestTitle') || 'テキスト選択で韻を探そう!';
     }
-    sessionStorage.setItem('guestTitle', noteTitle);
+    return 'テキスト選択で韻を探そう!';
+  });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const content = sessionStorage.getItem('guestContent');
+      if (content) {
+        setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(content))));
+      } else {
+        setEditorState(initialEditorState);
+      }
+      sessionStorage.setItem('guestTitle', noteTitle);
+    }
   }, [initialEditorState, noteTitle]);
 
   const [showEditor, setShowEditor] = useState(false);
@@ -68,13 +74,17 @@ const MyEditor: React.FC<MyEditorProps> = () => {
   }, []);
 
   useEffect(() => {
-    sessionStorage.setItem('guestTitle', noteTitle);
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem('guestTitle', noteTitle);
+    }
   }, [noteTitle]);
 
   const onChange = (newEditorState: EditorState) => {
     setEditorState(newEditorState);
-    const content = JSON.stringify(convertToRaw(newEditorState.getCurrentContent()));
-    sessionStorage.setItem('guestContent', content);
+    if (typeof window !== "undefined") {
+      const content = JSON.stringify(convertToRaw(newEditorState.getCurrentContent()));
+      sessionStorage.setItem('guestContent', content);
+    }
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

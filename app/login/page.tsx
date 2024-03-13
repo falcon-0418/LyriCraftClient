@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import SharedLayout from '../layout/sharedLayout';
+import axiosInstance from '../components/Editor/editor/axiosConfig';
 import axios from 'axios';
 import GoogleLoginButton from './googleLoginButton';
 
@@ -18,7 +19,7 @@ const LoginPage = () => {
     setErrorMessage('');
 
     try {
-      const response = await axios.post('http://localhost:3003/api/v1/authentication', {
+      const response = await axiosInstance.post('/authentication', {
         email: email,
         password: password,
       });

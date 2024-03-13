@@ -28,7 +28,7 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ clientId }) => {
           sessionStorage.setItem('accessToken', accessToken);
         }
         alert('ログインしました。');
-        router.push('components/Editor/editor');
+        router.push('main/Editor');
       }
     } catch (error) {
       console.error('バックエンドへのリクエストエラー:', error);

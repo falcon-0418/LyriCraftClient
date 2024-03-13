@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import GoogleLoginButton from '../login/googleLoginButton';
 import axios from 'axios';
+import axiosInstance from '../components/Editor/editor/axiosConfig';
 import SharedLayout from '../layout/sharedLayout';
 
 const SignUpPage = () => {
@@ -30,7 +31,7 @@ const SignUpPage = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:3003/api/v1/registration', {
+      const response = await axiosInstance.post('/registration', {
         user: {
           name: username,
           email: email,
@@ -55,7 +56,7 @@ const SignUpPage = () => {
 
       alert('登録しました。');
       // 登録後に別のページに遷移
-      router.push('components/Editor/editor');
+      router.push('main/Editor/');
     } catch (error) {
       console.error('アカウント作成エラー:', error);
     }

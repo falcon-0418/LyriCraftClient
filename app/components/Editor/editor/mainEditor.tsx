@@ -109,7 +109,9 @@ const MyEditor: React.FC<MyEditorProps> = () => {
           setIsSidebarOpen(false);
       }, 100);
     }
-    localStorage.setItem('lastSelectedNoteId', selectedNoteId.toString());
+    if (typeof window !== "undefined") {
+      localStorage.setItem('lastSelectedNoteId', selectedNoteId.toString());
+    }
     if (textareaRef.current) {
       textareaRef.current.focus();
     }
@@ -139,15 +141,17 @@ const MyEditor: React.FC<MyEditorProps> = () => {
         }));
 
         setNotes(fetchedNotes);
-        const lastSelectedNoteId = localStorage.getItem('lastSelectedNoteId');
-        if (fetchedNotes.length > 0) {
-          const mostRecentNote = lastSelectedNoteId
-            ? fetchedNotes.find((note: NoteData) => note.id.toString() === lastSelectedNoteId) || fetchedNotes[0]
-            : fetchedNotes[0];
-          setNoteId(mostRecentNote.id);
-          setNoteTitle(mostRecentNote.title);
-          setEditorState(EditorState.createWithContent(
-            convertFromRaw(JSON.parse(mostRecentNote.body))));
+        if (typeof window !== "undefined") {
+          const lastSelectedNoteId = localStorage.getItem('lastSelectedNoteId');
+          if (fetchedNotes.length > 0) {
+            const mostRecentNote = lastSelectedNoteId
+              ? fetchedNotes.find((note: NoteData) => note.id.toString() === lastSelectedNoteId) || fetchedNotes[0]
+              : fetchedNotes[0];
+            setNoteId(mostRecentNote.id);
+            setNoteTitle(mostRecentNote.title);
+            setEditorState(EditorState.createWithContent(
+              convertFromRaw(JSON.parse(mostRecentNote.body))));
+          }
         }
       } catch (error) {
         console.error('Error fetching notes:', error);
