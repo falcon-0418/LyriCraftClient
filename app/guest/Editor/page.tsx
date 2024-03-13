@@ -4,7 +4,7 @@ import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
 import { replaceOrAppendText } from '../../components/Editor/editor/textUtils';
 import Editor from '@draft-js-plugins/editor';
 import createInlineToolbarPlugin from '@draft-js-plugins/inline-toolbar';
-// import createLinkPlugin from '@draft-js-plugins/anchor';
+// # import createLinkPlugin from '@draft-js-plugins/anchor';
 // import createLinkifyPlugin from '@draft-js-plugins/linkify';
 
 import '@draft-js-plugins/anchor/lib/plugin.css';
