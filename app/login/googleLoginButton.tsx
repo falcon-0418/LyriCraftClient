@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import axiosInstance from '../components/Editor/editor/axiosConfig';
 
@@ -12,6 +12,28 @@ interface GoogleLoginButtonProps {
 
 const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ clientId }) => {
   const router = useRouter();
+
+  const handleCredentialResponse = useCallback(async (response: any) => {
+    console.log("Encoded JWT ID token: " + response.credential);
+    try {
+      const accessToken = response.credential;
+      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+      const backendResponse = await axiosInstance.post('authentication/google_create', {
+        token: accessToken,
+      });
+      if (backendResponse.status === 200) {
+        console.log('ログイン成功:', backendResponse.data);
+        const accessToken = backendResponse.headers['accesstoken'];
+        if (accessToken) {
+          sessionStorage.setItem('accessToken', accessToken);
+        }
+        alert('ログインしました。');
+        router.push('components/Editor/editor');
+      }
+    } catch (error) {
+      console.error('バックエンドへのリクエストエラー:', error);
+    }
+  }, [router]); // routerを依存配列に追加
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -34,29 +56,7 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ clientId }) => {
     return () => {
       document.body.removeChild(script);
     };
-  }, [clientId]);
-
-  const handleCredentialResponse = async (response: any) => {
-    console.log("Encoded JWT ID token: " + response.credential);
-    try {
-      const accessToken = response.credential;
-      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-      const backendResponse = await axiosInstance.post('authentication/google_create', {
-        token: accessToken,
-      });
-      if (backendResponse.status === 200) {
-        console.log('ログイン成功:', backendResponse.data);
-        const accessToken = backendResponse.headers['accesstoken'];
-      if (accessToken) {
-        sessionStorage.setItem('accessToken', accessToken);
-      }
-        alert('ログインしました。');
-        router.push('components/Editor/editor');
-      }
-    } catch (error) {
-      console.error('バックエンドへのリクエストエラー:', error);
-    }
-  };
+  }, [clientId, handleCredentialResponse]); // handleCredentialResponseを依存配列に追加
 
   return (
     <div id="googleLoginButton"></div>

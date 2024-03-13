@@ -89,3 +89,5 @@ export const Title = forwardRef<TitleRef, TitleProps>(
     );
   }
 );
+
+Title.displayName = 'Title';

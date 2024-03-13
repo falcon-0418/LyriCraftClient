@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: 'http://localhost:3003/api/v1',
+  baseURL: process.env.NEXT_PUBLIC_LYRICRAFT_API_URL,
   headers: {
     'Content-Type': 'application/json'
   }

@@ -10,6 +10,8 @@ interface AutoSaveComponentProps {
   noteTitle: string;
 }
 
+const autoSaveSubject = new Subject();
+
 const AutoSaveComponent = ({ editorState, noteId, noteTitle }: AutoSaveComponentProps) => {
   const saveContent = useCallback(async () => {
     if (!noteId) return;
@@ -26,7 +28,6 @@ const AutoSaveComponent = ({ editorState, noteId, noteTitle }: AutoSaveComponent
       }
   }, [editorState, noteId, noteTitle]);
 
-  const autoSaveSubject = new Subject();
 
   useEffect(() => {
     const autoSaveSubscription = autoSaveSubject.pipe(
