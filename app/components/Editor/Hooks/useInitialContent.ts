@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { EditorState, convertFromRaw, genKey } from 'draft-js';
-import useParseTextToBlocks from './useParseTextToBlocks';
+import { EditorState, convertFromRaw } from 'draft-js';
+import parseTextToBlocks from './helpers/parseTextToBlocks';
 
 export const useInitialContent = (filePath: string) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -9,7 +9,7 @@ export const useInitialContent = (filePath: string) => {
     const loadContent = async () => {
       const response = await fetch(filePath);
       const text = await response.text();
-      const blocks = useParseTextToBlocks(text); // Updated to use the parsing function
+      const blocks = parseTextToBlocks(text); // Updated to use the parsing function
 
       // Convert to Draft.js understandable format
       const rawContentState = {
