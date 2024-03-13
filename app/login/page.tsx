@@ -33,7 +33,7 @@ const LoginPage = () => {
       }
 
         alert('ログインしました。');
-        router.push('components/Editor/editor');
+        router.push('main/Editor/');
       }
       } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
