@@ -26,7 +26,7 @@ import SharedLayout from '@/app/layout/sharedLayout';
 interface MyEditorProps {}
 
 const MyEditor: React.FC<MyEditorProps> = () => {
-  const initialEditorState = useInitialContent('/defaultContent.txt');
+  const initialEditorState = useInitialContent('public/defaultContent.txt');
   const [editorState, setEditorState] = React.useState<EditorState>(() => EditorState.createEmpty());
   const [noteTitle, setNoteTitle] = useState(() => {
     if (typeof window !== "undefined") {
