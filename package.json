@@ -23,7 +23,8 @@
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.0.1",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "vercel": "^33.5.5"
   },
   "devDependencies": {
     "@types/draft-js": "^0.11.17",
