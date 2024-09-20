@@ -92,7 +92,7 @@ const MyEditor: React.FC<MyEditorProps> = () => {
     }
   }, [router]);
 
-  const onNewNoteCreated = async (newNote: NoteData | null) => {
+  const onNoteCreated = async (newNote: NoteData | null) => {
     if (newNote !== null) {
       await handleNoteCreated(newNote.id, setNotes, notes);
       setNoteId(newNote.id);
@@ -205,7 +205,7 @@ const MyEditor: React.FC<MyEditorProps> = () => {
           notes={notes}
           onSelectNote={onSelectNote}
           onDeleteNote={onDeleteNote}
-          onNoteCreated={onNewNoteCreated}
+          onNoteCreated={onNoteCreated}
           setSidebarWidth={setSidebarWidth}
           isSidebarOpen={isSidebarOpen}
           sidebarWidth={sidebarWidth}
