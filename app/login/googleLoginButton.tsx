@@ -48,7 +48,7 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ clientId }) => {
       });
       window.google.accounts.id.renderButton(
         document.getElementById("googleLoginButton"),
-        { theme: "outline", size: "large" }
+        { theme: "outline", size: "large", width: 300 }
       );
       window.google.accounts.id.prompt();
     };

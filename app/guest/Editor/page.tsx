@@ -26,13 +26,13 @@ import SharedLayout from '@/app/layout/sharedLayout';
 interface MyEditorProps {}
 
 const MyEditor: React.FC<MyEditorProps> = () => {
-  const initialEditorState = useInitialContent('public/defaultContent.txt');
+  const initialEditorState = useInitialContent('');
   const [editorState, setEditorState] = React.useState<EditorState>(() => EditorState.createEmpty());
   const [noteTitle, setNoteTitle] = useState(() => {
     if (typeof window !== "undefined") {
-      return sessionStorage.getItem('guestTitle') || 'テキスト選択で韻を探そう!';
+      return sessionStorage.getItem('guestTitle') || 'テキスト選択で韻を探せます!';
     }
-    return 'テキスト選択で韻を探そう!';
+    return 'テキスト選択で韻を探せます！';
   });
 
   useEffect(() => {
@@ -41,11 +41,11 @@ const MyEditor: React.FC<MyEditorProps> = () => {
       if (content) {
         setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(content))));
       } else {
-        setEditorState(initialEditorState);
+        setEditorState(EditorState.createEmpty());
       }
       sessionStorage.setItem('guestTitle', noteTitle);
     }
-  }, [initialEditorState, noteTitle]);
+  }, [noteTitle]);
 
   const [showEditor, setShowEditor] = useState(false);
   const [searchResults, setSearchResults] = useState<any[]>([]);
@@ -140,7 +140,7 @@ const MyEditor: React.FC<MyEditorProps> = () => {
                 onChange={onChange}
                 plugins={plugins}
                 blockStyleFn={blockStyleFn}
-                placeholder='何か書いてテキスト選択してみよう'
+                placeholder='テキスト入力 → テキスト選択 → 韻検索'
                 handleKeyCommand={handleKeyCommand}
                 keyBindingFn={keyBindingFn}
               />

@@ -36,7 +36,7 @@ interface MyEditorProps {}
 
 const MyEditor: React.FC<MyEditorProps> = () => {
 
-  const initialEditorState = useInitialContent('/defaultContent.txt');
+  const initialEditorState = useInitialContent('');
   const [editorState, setEditorState] = React.useState<EditorState>(initialEditorState);
 
   // const contentState = editorState.getCurrentContent();
@@ -149,8 +149,7 @@ const MyEditor: React.FC<MyEditorProps> = () => {
               : fetchedNotes[0];
             setNoteId(mostRecentNote.id);
             setNoteTitle(mostRecentNote.title);
-            setEditorState(EditorState.createWithContent(
-              convertFromRaw(JSON.parse(mostRecentNote.body))));
+            setEditorState(EditorState.createEmpty());
           }
         }
       } catch (error) {
@@ -188,10 +187,8 @@ const MyEditor: React.FC<MyEditorProps> = () => {
     }
   }, [isSidebarOpen]);
 
-  const containerClasses = `flex min-h-screen bg-stone-50 overflow-x-hidden max-w-full`;
-
   return (
-    <div className={containerClasses} >
+    <div className="flex min-h-screen bg-stone-50 overflow-x-hidden max-w-full" >
       <div className="fixed top-0 left-0 bottom-0"
         style={{
           width: isSidebarOpen || isHovered ? `${sidebarWidth}px` : '0',

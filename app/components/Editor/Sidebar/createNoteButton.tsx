@@ -1,6 +1,5 @@
 import React from 'react';
 import axiosInstance from '../editor/axiosConfig';
-import { ContentState, convertToRaw } from 'draft-js';
 import { NoteData } from '@/types/types';
 
 interface CreateNoteButtonProps {
@@ -9,16 +8,8 @@ interface CreateNoteButtonProps {
 
 const CreateNoteButton: React.FC<CreateNoteButtonProps> = ({ onNoteCreated }) => {
   const createNote = async () => {
-    const emptyContentState = ContentState.createFromText("");
-    const rawJson = convertToRaw(emptyContentState);
-
     try {
-      const response = await axiosInstance.post('/user/notes', {
-        note: {
-          title: "",
-          body: JSON.stringify(rawJson)
-        }
-      });
+      const response = await axiosInstance.post('/user/notes');
 
       if (response.data && response.data.data) {
         const newNote = {

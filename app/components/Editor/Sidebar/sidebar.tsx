@@ -71,7 +71,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   }, [windowWidth, isSidebarOpen, setSidebarWidth, sidebarWidth]);
 
   const handleDrag = (e: MouseEvent) => {
-    if (windowWidth >= 640) { 
+    if (windowWidth >= 640) {
       const newWidth = Math.min(Math.max(e.clientX, 250), 400);
       setSidebarWidth(newWidth);
       localStorage.setItem('sidebarWidth', newWidth.toString());
